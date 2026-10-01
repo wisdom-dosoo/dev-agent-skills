@@ -28,6 +28,19 @@ jobs:
             frontend-excellence/frontend-excellence/evals/check-fixtures.sh \
             install.sh \
             scripts/check-house-style.sh
+      - name: installer smoke test (all agents)
+        run: |
+          for a in claude codex copilot agents; do
+            rm -rf "/tmp/skills-$a"
+            bash install.sh --agent "$a" --dest "/tmp/skills-$a" >/dev/null
+            [ -f "/tmp/skills-$a/system-design/SKILL.md" ] || exit 1
+          done
+          rm -rf /tmp/skills-link
+          bash install.sh --agent agents --link --dest /tmp/skills-link >/dev/null
+          [ -f /tmp/skills-link/system-design/SKILL.md ] || exit 1
+          HOME=/tmp/fakehome bash install.sh >/dev/null
+          [ -f /tmp/fakehome/.claude/skills/system-design/SKILL.md ] || exit 1
+          echo INSTALLER-OK
       - name: house-style gate (CONTRIBUTING.md Decisions 1-3)
         run: bash scripts/check-house-style.sh
       - name: fixture suites (all skills with fixtures)

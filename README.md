@@ -64,7 +64,7 @@ for s in web-app-development cross-platform-mobile security-review devops-delive
   bash ~/.claude/skills/$s/evals/check-fixtures.sh || exit 1
 done
 # expect: all PASS
-#   web: 4 passed · mobile: 4 FAILs · security: 3 FAILs
+#   web: 4 passed · mobile: 4 FAILs · security: 3 FAILs (+ tracked-.env once committed)
 #   devops: 1 FAIL · qa: 1+0 FAILs · frontend: 1 FAIL
 bash scripts/check-house-style.sh   # run from the repo: 25 portfolio checks
 ```

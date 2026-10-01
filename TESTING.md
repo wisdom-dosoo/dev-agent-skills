@@ -17,7 +17,7 @@ bash cross-platform-mobile/cross-platform-mobile/evals/check-fixtures.sh  # expe
 ~/.claude/skills/web-app-development/evals/check-fixtures.sh
 ~/.claude/skills/cross-platform-mobile/evals/check-fixtures.sh
 ```
-Other fixture suites (same pattern): `security-review` (expect 3 FAILs), `devops-delivery` (expect 1 FAIL), `quality-assurance` (no-tests 1 FAIL, tested 0 FAILs), `frontend-excellence` (expect 1 FAIL). Doc-driven skills (`product-planning`, `system-design`, `observability-scale`) have `evals/evals.json` (8 prompts each) but no fixtures — test them via Step 2 only. The full contract (when a skill earns scripts, frontmatter and eval rules) lives in `CONTRIBUTING.md` and is enforced by `scripts/check-house-style.sh`.
+Other fixture suites (same pattern): `security-review` (3 content FAILs, +1 tracked-.env FAIL once committed — derived from git state, see its `check-fixtures.sh`), `devops-delivery` (expect 1 FAIL), `quality-assurance` (no-tests 1 FAIL, tested 0 FAILs), `frontend-excellence` (expect 1 FAIL). Doc-driven skills (`product-planning`, `system-design`, `observability-scale`) have `evals/evals.json` (8 prompts each) but no fixtures — test them via Step 2 only. The full contract (when a skill earns scripts, frontmatter and eval rules) lives in `CONTRIBUTING.md` and is enforced by `scripts/check-house-style.sh`.
 This only tests the scripts. Run it again whenever you edit a threshold in a script. On Windows, run these from Git Bash or WSL (see README.md).
 
 ---
