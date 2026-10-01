@@ -16,8 +16,8 @@ param(
 )
 $ErrorActionPreference = "Stop"
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$skills = @("product-planning", "system-design", "web-app-development", "cross-platform-mobile", "frontend-excellence", "security-review", "quality-assurance", "devops-delivery", "observability-scale")
-$fixtured = @("web-app-development", "cross-platform-mobile", "security-review", "devops-delivery", "quality-assurance", "frontend-excellence")
+$skills = @("product-planning", "system-design", "web-app-development", "cross-platform-mobile", "website-building", "frontend-excellence", "security-review", "quality-assurance", "devops-delivery", "observability-scale")
+$fixtured = @("web-app-development", "cross-platform-mobile", "website-building", "security-review", "devops-delivery", "quality-assurance", "frontend-excellence")
 
 function Get-DefaultDest($a) {
   switch ($a) {

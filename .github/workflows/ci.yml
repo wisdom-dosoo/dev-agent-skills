@@ -18,6 +18,8 @@ jobs:
             web-app-development/web-app-development/evals/check-fixtures.sh \
             cross-platform-mobile/cross-platform-mobile/scripts/preflight.sh \
             cross-platform-mobile/cross-platform-mobile/evals/check-fixtures.sh \
+            website-building/website-building/scripts/site-check.sh \
+            website-building/website-building/evals/check-fixtures.sh \
             security-review/security-review/scripts/secrets-scan.sh \
             security-review/security-review/evals/check-fixtures.sh \
             devops-delivery/devops-delivery/scripts/container-check.sh \
@@ -45,7 +47,7 @@ jobs:
         run: bash scripts/check-house-style.sh
       - name: fixture suites (all skills with fixtures)
         run: |
-          for s in web-app-development cross-platform-mobile security-review devops-delivery quality-assurance frontend-excellence; do
+          for s in web-app-development cross-platform-mobile website-building security-review devops-delivery quality-assurance frontend-excellence; do
             echo "== $s =="
             bash $s/$s/evals/check-fixtures.sh || exit 1
           done

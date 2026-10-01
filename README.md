@@ -1,6 +1,6 @@
 # dev-agent-skills
 
-Nine Claude agent skills covering the full software-engineering lifecycle — from "I have an idea" to production operations. Install them into Claude Code or claude.ai and they trigger automatically on the right prompts: planning scopes the work, design records the decisions, stack skills build it, gates audit it, DevOps ships it, observability keeps it alive.
+Ten Claude agent skills covering the full software-engineering lifecycle — from "I have an idea" to production operations. Install them into Claude Code or claude.ai and they trigger automatically on the right prompts: planning scopes the work, design records the decisions, stack skills build it, gates audit it, DevOps ships it, observability keeps it alive.
 
 | Layer | Skill | Field in one line |
 |---|---|---|
@@ -8,6 +8,7 @@ Nine Claude agent skills covering the full software-engineering lifecycle — fr
 | Design | `system-design` | Architecture patterns, API contracts, data modeling, ADRs |
 | Build | `web-app-development` | MERN, Next.js 16, Django 6.1, FastAPI 0.x, Flask, Postgres/MongoDB |
 | Build | `cross-platform-mobile` | Expo SDK 57 + EAS (default), bare React Native, Flutter |
+| Build | `website-building` | Marketing/landing/portfolio/blog sites, static-first, SEO |
 | Build quality | `frontend-excellence` | Core Web Vitals, bundles, accessibility (WCAG), SEO |
 | Gate | `security-review` | OWASP audits, secret scanning, threat modeling |
 | Gate | `quality-assurance` | Test pyramid, E2E, flaky triage, coverage gates |
@@ -60,11 +61,11 @@ rm -rf ~/.claude/skills/<skill-name>   # uninstall one
 
 ```bash
 # Every skill with a deterministic script has a 10-second fixture suite:
-for s in web-app-development cross-platform-mobile security-review devops-delivery quality-assurance frontend-excellence; do
+for s in web-app-development cross-platform-mobile website-building security-review devops-delivery quality-assurance frontend-excellence; do
   bash ~/.claude/skills/$s/evals/check-fixtures.sh || exit 1
 done
 # expect: all PASS
-#   web: 4 passed · mobile: 4 FAILs · security: 3 FAILs (+ tracked-.env once committed)
+#   web: 4 passed · mobile: 4 FAILs · website: 1 FAIL · security: 3 FAILs (+ tracked-.env once committed)
 #   devops: 1 FAIL · qa: 1+0 FAILs · frontend: 1 FAIL
 bash scripts/check-house-style.sh   # run from the repo: 25 portfolio checks
 ```
@@ -292,10 +293,10 @@ Full methodology in `TESTING.md`: trigger tests (does it fire / not fire) + with
 
 ```bash
 # Automatic checks (10 seconds, no AI) — from the repo root:
-for s in web-app-development cross-platform-mobile security-review devops-delivery quality-assurance frontend-excellence; do
+for s in web-app-development cross-platform-mobile website-building security-review devops-delivery quality-assurance frontend-excellence; do
   bash $s/$s/evals/check-fixtures.sh || exit 1
 done
-bash scripts/check-house-style.sh   # 25 portfolio checks
+bash scripts/check-house-style.sh   # 28 portfolio checks
 ```
 
 ---
@@ -345,7 +346,7 @@ Read `CONTRIBUTING.md` before adding or splitting a skill: the merge-vs-split tr
 
 ## Known gaps
 
-- No marketing/landing-page skill — "make a landing page" intentionally triggers nothing (explicitly documented, not an oversight).
+- `website-building` covers marketing/landing/portfolio/blog sites (static-first). "Make a landing page" triggers it — the former gap is closed.
 - Fixtures use illustrative placeholder versions (e.g. `expo ~56.0.0`); the failures they trigger are real.
 - Flask coverage is minimal (detection + generic checks); Django/FastAPI are the supported Python paths.
 - Not tested: claude.ai upload path, API (`/v1/skills`) path.

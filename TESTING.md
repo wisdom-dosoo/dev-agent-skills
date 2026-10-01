@@ -17,7 +17,7 @@ bash cross-platform-mobile/cross-platform-mobile/evals/check-fixtures.sh  # expe
 ~/.claude/skills/web-app-development/evals/check-fixtures.sh
 ~/.claude/skills/cross-platform-mobile/evals/check-fixtures.sh
 ```
-Other fixture suites (same pattern): `security-review` (3 content FAILs, +1 tracked-.env FAIL once committed — derived from git state, see its `check-fixtures.sh`), `devops-delivery` (expect 1 FAIL), `quality-assurance` (no-tests 1 FAIL, tested 0 FAILs), `frontend-excellence` (expect 1 FAIL). Doc-driven skills (`product-planning`, `system-design`, `observability-scale`) have `evals/evals.json` (8 prompts each) but no fixtures — test them via Step 2 only. The full contract (when a skill earns scripts, frontmatter and eval rules) lives in `CONTRIBUTING.md` and is enforced by `scripts/check-house-style.sh`.
+Other fixture suites (same pattern): `website-building` (expect 1 FAIL), `security-review` (3 content FAILs, +1 tracked-.env FAIL once committed — derived from git state, see its `check-fixtures.sh`), `devops-delivery` (expect 1 FAIL), `quality-assurance` (no-tests 1 FAIL, tested 0 FAILs), `frontend-excellence` (expect 1 FAIL). Doc-driven skills (`product-planning`, `system-design`, `observability-scale`) have `evals/evals.json` (8 prompts each) but no fixtures — test them via Step 2 only. The full contract (when a skill earns scripts, frontmatter and eval rules) lives in `CONTRIBUTING.md` and is enforced by `scripts/check-house-style.sh`.
 This only tests the scripts. Run it again whenever you edit a threshold in a script. On Windows, run these from Git Bash or WSL (see README.md).
 
 ---
@@ -46,6 +46,16 @@ Open a **fresh session** for each prompt (a skill already read earlier in a chat
 | 5 | "Upgrade my Expo SDK" |
 | 6 | "How do I submit my React Native app to TestFlight?" |
 
+**Should trigger, `website-building`**
+| # | Prompt |
+|---|---|
+| 1 | "Make a landing page for my bakery" |
+| 2 | "Build a marketing site for our SaaS" *(vague)* |
+| 3 | "Our shared links show a gray box with no image" |
+| 4 | "We need a blog our team can publish to" |
+| 5 | "Astro or Next.js for our marketing site?" |
+| 6 | "Plan the pages for a freelancer portfolio" |
+
 **Should NOT trigger either skill**
 | # | Prompt | Why |
 |---|---|---|
@@ -54,7 +64,6 @@ Open a **fresh session** for each prompt (a skill already read earlier in a chat
 | 3 | "Make a PowerPoint about our Q3 results" | Different skill |
 | 4 | "Build a native Swift app for the Apple Watch" | Mobile skill excludes native-only apps |
 | 5 | "Explain how binary search works" | General knowledge |
-| 6 | "Make a landing page for my bakery" | Web skill excludes static marketing sites (you have no skill for this yet; see Known gaps) |
 
 **Scoring:** if a should-trigger prompt misses, add that phrasing to the skill's `description` and retest. If a should-not prompt triggers, tighten the "Not for ..." clause. Aim for at least 5 of 6 on each should-trigger list and 0 false triggers.
 
@@ -101,6 +110,6 @@ Expectations name behaviors ("confirms the latest patched version from a live so
 
 ## Known gaps
 
-- **No marketing-website skill yet.** "Make a landing page" correctly triggers neither skill, so Claude falls back to general behavior.
+- **Boundary case (now covered):** "Make a landing page" triggers `website-building`, not the web-app skill. If the web-app skill fires on it instead, tighten its "Not for static marketing sites" clause.
 - **Fixtures use placeholder versions** (e.g. `expo ~56.0.0`, `react-native 0.85.0`). They are illustrative; the failures they trigger (newArchEnabled, secret in `EXPO_PUBLIC_`, target SDK 35) are real.
 - **Not tested:** the claude.ai upload path, and the API (`/v1/skills`) path.

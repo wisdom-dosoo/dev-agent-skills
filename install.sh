@@ -11,8 +11,8 @@
 # --link symlinks instead of copying (drift-free; Codex follows symlinks).
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
-SKILLS="product-planning system-design web-app-development cross-platform-mobile frontend-excellence security-review quality-assurance devops-delivery observability-scale"
-FIXTURED="web-app-development cross-platform-mobile security-review devops-delivery quality-assurance frontend-excellence"
+SKILLS="product-planning system-design web-app-development cross-platform-mobile website-building frontend-excellence security-review quality-assurance devops-delivery observability-scale"
+FIXTURED="web-app-development cross-platform-mobile website-building security-review devops-delivery quality-assurance frontend-excellence"
 
 usage() {
   cat <<'EOF'
