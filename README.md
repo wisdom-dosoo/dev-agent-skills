@@ -316,6 +316,14 @@ Version/store data rots fast (Next.js shipped ~3 security releases in 10 days in
 
 ---
 
+## Proof it works
+
+- **`RESULTS.md`** — measured numbers (7 fixture suites, 28 gate checks, 80 graded prompts, all green) plus the bugs the gates caught during development. AI with-vs-without scores are an open table, not claimed.
+- **`examples/bakery/`** — a real two-page site built through the skills (PRD → 2 ADRs → pages) with its `AUDIT.md`: 3 passing gates and 1 honestly-accepted residual.
+- **`demos/`** — three 60-second runnable "catch" moments (leaked secrets, unshippable landing page, untested project) with transcripts.
+
+---
+
 ## Testing the skills
 
 Full methodology in `TESTING.md`: trigger tests (does it fire / not fire) + with-vs-without output tests, 8 prompts per skill, pass at 80%, security and live-source misses are defects.

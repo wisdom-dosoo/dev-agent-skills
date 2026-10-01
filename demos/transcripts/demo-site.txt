@@ -1,0 +1,15 @@
+$ site-check.sh website-building/.../evals/files/landing-bad
+Site check in /c/Users/brook/OneDrive/Desktop/WORKSHOP/dev-agent-skills/website-building/website-building/evals/files/landing-bad
+  [FAIL] broken internal link(s); fix or remove before launch:
+    -> ./index.html: pricing.html
+    -> ./index.html: /contact/
+  [warn] page(s) without meta description: ./index.html
+  [warn] page(s) missing OG tags: ./about.html(title) ./about.html(image) ./index.html(title) ./index.html(image)
+  [warn] page(s) without canonical: ./about.html ./index.html
+  [warn] page(s) without exactly one h1: ./about.html(2)
+  [warn] no sitemap.xml; crawlers discover pages slower
+  [warn] no robots.txt; add one (and Disallow: / on staging)
+  [warn] form(s) without action; ensure an endpoint + spam protection exists:./index.html
+
+Summary: 0 ok, 7 warn, 1 FAIL
+--- takeaway: 1 FAIL (broken links) plus every missing SEO tag named with its fix.

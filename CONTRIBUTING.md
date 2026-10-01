@@ -42,6 +42,7 @@ Every `evals/evals.json` MUST: be valid JSON with `skill_name` matching the dire
 - [ ] Proves all three split triggers (Decision 1) in the PR description, or lands as a `references/` file instead.
 - [ ] Declares script-bearing (with fixture test) or doc-driven (added to `DOC_DRIVEN` with reason).
 - [ ] Passes `scripts/check-house-style.sh` and every fixture suite in `README.md`.
+- [ ] Adds its measured rows to `RESULTS.md` (fixture result + gate count; AI scores only after a real with-vs-without run).
 - [ ] If any skill changed, re-ran `scripts/sync-plugin.sh` so the Codex plugin copies match (CI checks this).
 - [ ] Wired into `README.md` table, `install.sh` / `install.ps1`, and `.github/workflows/ci.yml`.
 - [ ] Snapshot file only if versions/store-deadlines drive decisions; otherwise no `current-state.md` (freshness burden must be earned).

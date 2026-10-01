@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "dev-agent-skills",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Full software-engineering lifecycle skills: plan, design, build, secure, ship, and operate. 10 skills with deterministic checks.",
   "author": {
     "name": "DOSOO WISDOM",

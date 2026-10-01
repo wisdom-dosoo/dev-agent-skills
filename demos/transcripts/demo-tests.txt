@@ -1,0 +1,18 @@
+$ test-check.sh quality-assurance/.../evals/files/no-tests
+Test check in /c/Users/brook/OneDrive/Desktop/WORKSHOP/dev-agent-skills/quality-assurance/quality-assurance/evals/files/no-tests
+  [FAIL] no test files found (*.test.*, *_test.py, ...); add tests before shipping
+  [warn] no coverage thresholds configured; add gates for new code
+  [warn] app project without e2e (Playwright/Cypress/integration_test); add the golden path
+  [warn] no CI workflows; tests do not block merges
+
+Summary: 0 ok, 3 warn, 1 FAIL
+
+$ test-check.sh quality-assurance/.../evals/files/tested
+Test check in /c/Users/brook/OneDrive/Desktop/WORKSHOP/dev-agent-skills/quality-assurance/quality-assurance/evals/files/tested
+  [ok]   1 test file(s) present
+  [warn] no coverage thresholds configured; add gates for new code
+  [warn] app project without e2e (Playwright/Cypress/integration_test); add the golden path
+  [warn] no CI workflows; tests do not block merges
+
+Summary: 1 ok, 3 warn, 0 FAIL
+--- takeaway: zero test files is a FAIL that names the gate; the tested twin passes.
