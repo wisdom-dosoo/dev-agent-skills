@@ -1,0 +1,117 @@
+{
+  "skill_name": "web-app-development",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I want to build a recipe-sharing site with MERN. Users sign up, post recipes with photos, and comment. Set up the project structure and the API.",
+      "expected_output": "MERN scaffold on current versions (Express 5, Mongoose 9, React + Vite, TypeScript), shared zod schemas, auth and upload basics done safely.",
+      "files": [],
+      "expectations": [
+        "Reads references/current-state.md or checks versions live instead of stating versions from memory",
+        "Uses Express 5 conventions (named wildcard, explicit express.json with a size limit)",
+        "Validates request bodies with a zod (or equivalent) schema before querying MongoDB",
+        "Sets multer limits and requires multer >= 2.3.0 for photo uploads",
+        "Does not put secrets in VITE_ variables",
+        "Does not pin mongo:8.2"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "This Next.js app is on an old version. Is it safe to deploy, and what should I upgrade to?",
+      "expected_output": "Finds next 16.3.5 is vulnerable to the next/og RCE, confirms the current patched version from a live source, and gives upgrade commands.",
+      "files": [
+        "evals/files/next-old"
+      ],
+      "expectations": [
+        "Runs scripts/preflight.sh or equivalent and reports a FAIL for next 16.3.5",
+        "Names the critical next/og remote code execution issue (fixed in 16.3.6)",
+        "Confirms the latest patched version from nextjs.org (not from memory) and mentions the Sept 30, 2026 release",
+        "Gives an exact npm install command and tells the user to run next build afterwards",
+        "Says clearly it is not safe to deploy as-is"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Review this Express login route for problems.",
+      "expected_output": "Identifies NoSQL injection and plaintext password handling, and proposes a validated, hashed, rate-limited login.",
+      "files": [
+        "evals/files/mern-bad/routes/auth.js"
+      ],
+      "expectations": [
+        "Identifies NoSQL operator injection from passing req.body straight into findOne",
+        "Notes that passwords are compared in plaintext (no argon2id/bcrypt)",
+        "Notes the token is just the user _id (not a signed token or session)",
+        "Proposes schema validation and rate limiting on the login route",
+        "Provides corrected code"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Audit this project before we ship it.",
+      "expected_output": "Runs preflight and reports the dependency, database-image and runtime problems with specific fixes.",
+      "files": [
+        "evals/files/mern-bad"
+      ],
+      "expectations": [
+        "Reports multer below 2.3.0 as a High-severity problem",
+        "Flags mongoose 7 as unsupported and recommends 9",
+        "Flags mongo:8.2 (security support ended 2026-07-31)",
+        "Flags postgres:19-beta as not for production",
+        "Flags that Express 4 should move to 5 for new work",
+        "Separates FAIL items from lower-priority warnings"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "We need an internal HR tool: employee records, roles and permissions, an admin screen, and some reports. Django or FastAPI?",
+      "expected_output": "One clear recommendation (Django + Postgres) with the reason.",
+      "files": [],
+      "expectations": [
+        "Recommends Django and gives a reason tied to admin, auth and ORM/migrations",
+        "Recommends Postgres",
+        "Gives one recommendation rather than a menu",
+        "Mentions FastAPI only to say when it would be the better choice"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Python 3.15 just came out. Upgrade this Django project to it.",
+      "expected_output": "Pushes back: Django 6.1 officially supports 3.12 to 3.14 only, so stay on 3.14 until Django lists 3.15.",
+      "files": [
+        "evals/files/django-py315"
+      ],
+      "expectations": [
+        "Notes that Django 6.1 officially supports Python 3.12 to 3.14 only",
+        "Verifies the claim from a live source or current-state.md and names it",
+        "Recommends setting .python-version to 3.14 (or testing 3.15 in a separate CI job)",
+        "Does not simply change the version and declare success"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Can you check this FastAPI service's config before we deploy?",
+      "expected_output": "Flags wildcard CORS with credentials and the unpinned fastapi version.",
+      "files": [
+        "evals/files/fastapi-bad"
+      ],
+      "expectations": [
+        "Flags allow_origins=['*'] combined with allow_credentials=True",
+        "Recommends an explicit origin list from configuration",
+        "Flags that fastapi is not pinned to an exact version and explains the 0.x release cadence",
+        "Notes dependencies are not pinned or locked (no exact versions, no lock file)"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "I upgraded to TypeScript 7 and now typescript-eslint crashes in CI.",
+      "expected_output": "Explains TS 7 has no compiler API until 7.1 and shows the @typescript/typescript6 side-by-side fix.",
+      "files": [],
+      "expectations": [
+        "States that TypeScript 7.0 ships without a programmatic API",
+        "Recommends the @typescript/typescript6 compatibility package for tools that need the API",
+        "Suggests keeping tsc on 7 for type-checking",
+        "Does not tell the user to downgrade as the only option"
+      ]
+    }
+  ]
+}

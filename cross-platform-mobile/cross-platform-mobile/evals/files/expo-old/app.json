@@ -1,0 +1,2 @@
+{"expo":{"name":"gymbook","slug":"gymbook","newArchEnabled":true,
+ "plugins":[["expo-build-properties",{"android":{"targetSdkVersion":35}}]]}}

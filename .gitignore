@@ -1,0 +1,28 @@
+# build / install outputs
+mnt/
+outputs/
+*.log
+
+# JS / Python / mobile tooling
+node_modules/
+.venv/
+venv/
+.next/
+dist/
+build/
+android/build/
+ios/build/
+.dart_tool/
+
+# secrets & local env
+.env
+.env.*
+!.env.example
+# test fixtures intentionally ship fake .env files (labeled dummy secrets only)
+!**/evals/files/**
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

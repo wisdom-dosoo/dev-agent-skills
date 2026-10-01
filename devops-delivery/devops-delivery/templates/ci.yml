@@ -1,0 +1,38 @@
+name: ci
+on:
+  push:
+  pull_request:
+jobs:
+  build-test-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - run: npm audit --omit=dev --audit-level=high
+      - run: bash <skill-scripts>/container-check.sh .
+  deploy-staging:
+    needs: build-test-scan
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./deploy.sh staging "$GITHUB_SHA"
+      - run: ./smoke.sh https://staging.example.com
+  promote-production:
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    environment: production # required reviewers configured in repo settings
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./deploy.sh production "$GITHUB_SHA" # same SHA tested on staging
+      - run: ./smoke.sh https://example.com
+      # Rollback: ./deploy.sh production <previous-SHA> (SHAs recorded in release log)

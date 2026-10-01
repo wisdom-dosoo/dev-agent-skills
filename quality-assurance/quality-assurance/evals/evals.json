@@ -1,0 +1,102 @@
+{
+  "skill_name": "quality-assurance",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "This project has no tests. Where do we start before shipping?",
+      "expected_output": "Runs test-check, FAILs on zero tests, and proposes a layered plan starting with business logic.",
+      "files": ["evals/files/no-tests"],
+      "expectations": [
+        "Runs scripts/test-check.sh and reports the no-test-files FAIL",
+        "Proposes unit tests for the pricing logic first with a concrete case",
+        "Mentions integration tests with a real test database, not the dev DB",
+        "Recommends one E2E for the golden path only",
+        "Does not propose E2E for every edge case"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Write unit tests for this pricing function with discounts and tax.",
+      "expected_output": "Table-driven unit tests covering boundaries without mocking own code.",
+      "files": [],
+      "expectations": [
+        "Uses table-driven cases including zero, negative, and rounding boundaries",
+        "Mocks only boundaries (none needed here) and never own modules",
+        "Names the behavior each test locks in",
+        "Provides runnable code for the project's framework"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "How do we integration-test our Express API against Postgres?",
+      "expected_output": "Real test database per-test reset, auth override, and an unauthorized-denied test.",
+      "files": [],
+      "expectations": [
+        "Uses a real test database, explicitly not the dev database",
+        "Resets state per test via transactions or truncation",
+        "Overrides auth with test tokens and includes an unauthorized-fails test",
+        "Does not mock the database layer"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Our Playwright suite takes 40 minutes and flakes constantly. Fix it.",
+      "expected_output": "Quarantine-first triage with scope cuts and determinism fixes in order.",
+      "files": [],
+      "expectations": [
+        "Quarantines flakes first with tracking issues to keep the suite trusted",
+        "Cuts E2E scope to critical paths instead of raising timeouts",
+        "Orders fixes: shared state, clock, async waits over sleep, external doubles",
+        "Sets the 10-minute budget and parallelization before adding cases"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "What coverage target should we enforce in CI?",
+      "expected_output": "Diff-coverage gate plus ratcheting floor and the uncovered-list requirement.",
+      "files": [],
+      "expectations": [
+        "Gates new-code coverage at 80% rather than a flat total",
+        "Adds a ratcheting total floor",
+        "Requires the uncovered-critical-paths list alongside the number",
+        "Warns that untested payment code fails review regardless of the total"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Should we mock the database in our API tests to make them faster?",
+      "expected_output": "Refuses DB mocks with the boundary-mock rule and the speed alternative.",
+      "files": [],
+      "expectations": [
+        "Says no to mocking the database layer",
+        "States the rule: mock at the boundary (network, clock), never own collaborators",
+        "Proposes transaction rollback for speed instead",
+        "Explains what DB mocks hide (constraints, SQL errors)"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Write a test plan for releasing payments v2.",
+      "expected_output": "A complete plan following the template with residual risks.",
+      "files": [],
+      "expectations": [
+        "Follows the test-plan template (scope, layers, data, gates)",
+        "Lists explicitly untested areas as residual risk with reasons",
+        "Includes the unauthorized-payment-fails case",
+        "Sets CI gating and quarantine-age rules"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Do we need load testing before launch? 1,000 daily users expected.",
+      "expected_output": "Proportional answer: smoke-level check now, named trigger for full load testing.",
+      "files": [],
+      "expectations": [
+        "Calibrates effort to the scale (no full rig for 1k daily users)",
+        "Recommends a cheap smoke check (k6 single script on the hot path)",
+        "Names the metric trigger for full load testing later",
+        "Does not skip performance entirely"
+      ]
+    }
+  ]
+}

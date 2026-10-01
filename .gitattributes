@@ -1,0 +1,3 @@
+# Keep shell scripts on LF everywhere (Windows checkouts included).
+*.sh text eol=lf
+*.ps1 text eol=crlf

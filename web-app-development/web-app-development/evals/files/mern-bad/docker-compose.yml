@@ -1,0 +1,5 @@
+services:
+  db:
+    image: mongo:8.2
+  pg:
+    image: postgres:19-beta

@@ -1,0 +1,103 @@
+{
+  "skill_name": "devops-delivery",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Check these Docker files before we deploy to production.",
+      "expected_output": "Runs container-check, FAILs the baked-in secret, WARNs latest/unpinned and missing hygiene with fixes.",
+      "files": ["evals/files/docker-bad"],
+      "expectations": [
+        "Runs scripts/container-check.sh and reports its FAIL line",
+        "Flags the literal STRIPE_SECRET / POSTGRES_PASSWORD and says to rotate and move to env files",
+        "Flags node:latest and redis:latest as unpinned",
+        "Flags missing HEALTHCHECK, USER, .dockerignore, and restart policy",
+        "Gives exact fixed Dockerfile/compose snippets"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Put this Node app online. Small team, no infra experience, 500 users.",
+      "expected_output": "Recommends a PaaS with reasons and rejects K8s in one line.",
+      "files": [],
+      "expectations": [
+        "Recommends one PaaS target (Render/Fly/Railway) with a reason tied to team size",
+        "Explicitly rejects Kubernetes with a one-line cost reason",
+        "Includes staging before production and a rollback path",
+        "Gives exact deploy commands, not descriptions"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Set up CI for our repo: lint, tests, deploy staging then production.",
+      "expected_output": "A pipeline matching the template shape with promotion of one artifact.",
+      "files": [],
+      "expectations": [
+        "Orders lint, type-check/test, build, scan, staging deploy, smoke test, production promotion",
+        "Promotes the same artifact SHA to production instead of rebuilding",
+        "Gates production behind an environment approval",
+        "Names the rollback command (previous SHA)"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Our deploy needs a database migration that renames a column. How do we ship it safely?",
+      "expected_output": "Expand-migrate-contract with backward-compatible window and separate migration step.",
+      "files": [],
+      "expectations": [
+        "Describes expand, migrate, contract phases in order",
+        "Says migrations run as a separate step, not in app boot",
+        "Requires the app rollback to tolerate the newer schema",
+        "Does not propose locking rewrites or simultaneous breaking code+schema deploy"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Should we move to Kubernetes? We have 3 services and one backend engineer.",
+      "expected_output": "Says no with the owner/numbers reason and names what would change the answer.",
+      "files": [],
+      "expectations": [
+        "Says no with a reason tied to team size and missing platform owner",
+        "Names the forcing conditions that would justify K8s later",
+        "Proposes the simpler alternative that fits today",
+        "Does not provide K8s manifests as the answer"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Review this Dockerfile for production readiness.",
+      "expected_output": "Finds latest tag, root user, missing healthcheck, and secret handling with a fixed file.",
+      "files": ["evals/files/docker-bad/Dockerfile"],
+      "expectations": [
+        "Flags FROM node:latest and pins an exact version",
+        "Flags running as root and adds USER",
+        "Flags missing HEALTHCHECK and adds one",
+        "Flags ENV secret and moves it out of the image",
+        "Provides the corrected Dockerfile"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Production is down after a bad deploy. How do we roll back?",
+      "expected_output": "Immediate rollback command per target plus the 24h ownership and follow-up.",
+      "files": [],
+      "expectations": [
+        "Gives the exact rollback command for the stated target first",
+        "Says to verify with healthcheck and smoke test after rollback",
+        "Names an owner for the next 24h",
+        "Requires a written postmortem or incident note as follow-up"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Where do we put staging vs production secrets for the pipeline?",
+      "expected_output": "Separate scopes/identities per environment, never in repo or logs.",
+      "files": [],
+      "expectations": [
+        "Requires separate credentials per environment",
+        "Uses CI secret scopes or a secret manager, never repo files",
+        "States staging keys must not work in production",
+        "Notes anything that touched the repo must be rotated"
+      ]
+    }
+  ]
+}

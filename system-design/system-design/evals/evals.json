@@ -1,0 +1,103 @@
+{
+  "skill_name": "system-design",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We're building a SaaS appointment scheduler for clinics: bookings, reminders, payments, 5 engineers. How should we structure the system?",
+      "expected_output": "Recommends a modular monolith with reasons, names the seams, and records ADRs.",
+      "files": [],
+      "expectations": [
+        "Recommends a modular monolith (not microservices) with a reason tied to team size",
+        "Names module seams (scheduling, billing, notifications) and data ownership per entity",
+        "Proposes an API contract approach (OpenAPI, versioned, paginated lists)",
+        "Records decisions as ADRs using the template",
+        "Gives one recommendation rather than a menu"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Should we use microservices? We have 4 developers and 200 daily users.",
+      "expected_output": "Pushes back with the concrete trigger list and recommends monolith-first.",
+      "files": [],
+      "expectations": [
+        "Says no with reasons tied to team size and scale numbers, not fashion",
+        "Names the concrete triggers that would justify splitting later",
+        "Identifies the seam along which a future split would happen",
+        "Does not recommend Kubernetes or event sourcing for this scale"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Design the API for an order system: orders, line items, cancel, refunds.",
+      "expected_output": "REST resource model with versioning, pagination, idempotency, and a stable error shape.",
+      "files": [],
+      "expectations": [
+        "Uses noun-based resources with /v1 prefix",
+        "Makes cancel/refund explicit sub-resources or verbs, not RPC soup",
+        "Requires idempotency keys on mutating endpoints",
+        "Specifies cursor pagination and a stable error JSON shape",
+        "Separates wire schemas from DB models"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Postgres or MongoDB for a fintech ledger with transfers between accounts?",
+      "expected_output": "Postgres with real transactions, with the double-spend reason.",
+      "files": [],
+      "expectations": [
+        "Recommends Postgres with a reason tied to transactions and double-spend",
+        "States constraints live in the database, not just app code",
+        "Mentions event sourcing only as the exception case, not the default",
+        "Gives one recommendation rather than a menu"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "We need to notify users by email/SMS/push when a booking changes, plus update analytics. Sync or async?",
+      "expected_output": "Events for fan-out with versioned schemas and idempotent consumers.",
+      "files": [],
+      "expectations": [
+        "Recommends events over a synchronous call chain",
+        "Names events as past-tense facts with versioned schemas",
+        "Requires at-least-once delivery with idempotent consumers",
+        "Keeps the synchronous path to at most the core booking write"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Our reporting dashboard queries are slowing down the primary database.",
+      "expected_output": "Splits reporting from operational load in staged order.",
+      "files": [],
+      "expectations": [
+        "Recommends a read replica before heavier options",
+        "Mentions materialized views as the second rung",
+        "Does not jump straight to CQRS or a warehouse",
+        "States the metric that proves the fix (primary load, query latency)"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Write an ADR for choosing Postgres over MongoDB for our inventory service.",
+      "expected_output": "A complete ADR following the template with context, alternatives, and costs.",
+      "files": [],
+      "expectations": [
+        "Follows the ADR template (status, context, decision, alternatives, consequences)",
+        "Names at least one rejected alternative with a one-line reason",
+        "States a cost of the chosen option, not only benefits",
+        "Names a follow-up or revisit trigger"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Two services need the same customer data. Can they share the customers table?",
+      "expected_output": "Refuses shared-database access and proposes a versioned contract instead.",
+      "files": [],
+      "expectations": [
+        "Says no to a shared database with the ownership reason",
+        "Proposes one owner service plus a versioned API or event feed",
+        "Mentions additive-only evolution for the contract",
+        "Does not propose DB-level integration (views, dblink, shared schema)"
+      ]
+    }
+  ]
+}

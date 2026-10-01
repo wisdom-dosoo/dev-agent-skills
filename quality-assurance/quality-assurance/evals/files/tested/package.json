@@ -1,0 +1,1 @@
+{"name":"tested","private":true,"scripts":{"test":"vitest run"},"dependencies":{"react":"19.3.0"}}

@@ -1,0 +1,103 @@
+{
+  "skill_name": "frontend-excellence",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Check this landing page for accessibility and basics.",
+      "expected_output": "Runs frontend-check, FAILs missing alt text, WARNs lang/viewport/title/click-div with fixes.",
+      "files": ["evals/files/a11y-bad"],
+      "expectations": [
+        "Runs scripts/frontend-check.sh and reports its FAIL line",
+        "Flags the img tags without alt as defects with corrected markup",
+        "Flags missing lang, viewport meta, and title",
+        "Flags the click-only div and replaces it with a button",
+        "Gives exact fixed code"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Our Next.js landing page scores 55 on mobile Lighthouse with 4s LCP. Fix it.",
+      "expected_output": "Baseline-first plan in fix order: images, JS weight, fonts, render path.",
+      "files": [],
+      "expectations": [
+        "Starts from the measured baseline (LCP breakdown) rather than guessing",
+        "Addresses the hero image first (format, size, fetchpriority, not lazy-loaded)",
+        "Addresses JS weight with bundle analysis before micro-optimizations",
+        "Requires production-build measurement, never dev mode",
+        "States the expected gain per change"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Make our signup form accessible: email, password, error messages.",
+      "expected_output": "Labels, announced errors, keyboard flow, and contrast with exact markup.",
+      "files": [],
+      "expectations": [
+        "Associates every input with a label",
+        "Announces errors via aria-describedby or a live region, not color alone",
+        "Keeps the full flow keyboard-operable with visible focus",
+        "Provides corrected markup"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Set performance budgets for our e-commerce site in CI.",
+      "expected_output": "Concrete budgets (LCP/INP/CLS, bytes, scores) wired as CI gates.",
+      "files": [],
+      "expectations": [
+        "Gives numeric budgets for LCP, INP, CLS, and JS bytes",
+        "Wires budgets as CI gates that fail the build",
+        "Requires justification or shrinking when the budget blows",
+        "Says budgets ratchet down, never up without reason"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Our product list renders 5,000 rows and the page freezes. React SPA.",
+      "expected_output": "Virtualization/pagination with the measurement-first rationale.",
+      "files": [],
+      "expectations": [
+        "Identifies DOM node count as the bottleneck, not the framework",
+        "Recommends virtualization or pagination with thresholds",
+        "Fixes the data layer (paginated API) alongside the rendering",
+        "Does not propose a framework switch"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Do a keyboard-only review checklist for our checkout dialog.",
+      "expected_output": "APG-correct dialog pass: focus trap, Escape, focus return, live announcements.",
+      "files": [],
+      "expectations": [
+        "Requires focus trap inside the dialog and Escape to close",
+        "Requires focus return to the trigger on close",
+        "Requires async updates announced via a live region",
+        "Includes the visible-focus and skip-link checks"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Google doesn't index our React SPA product pages. What do we change?",
+      "expected_output": "SSR/prerendering diagnosis with the SSR-vs-prerender trade and verification.",
+      "files": [],
+      "expectations": [
+        "Diagnoses client-only rendering as the cause",
+        "Recommends SSR or prerendering with the trade-off stated",
+        "Covers unique titles, meta, and semantic headings per page",
+        "Verifies with rendered-HTML inspection (view-source/curl), not dev tools"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Should we add three new animation libraries for the marketing refresh?",
+      "expected_output": "Pushes back with the weight/accessibility cost and reduced-motion requirement.",
+      "files": [],
+      "expectations": [
+        "Says no to stacking libraries with the bundle-weight reason",
+        "Requires honoring prefers-reduced-motion for any animation",
+        "Proposes CSS/built-in alternatives first",
+        "Mentions no autoplaying video with sound"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "skill_name": "cross-platform-mobile",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I want to build an iPhone and Android app for a gym booking business. My team knows React. What should we use and how do we start?",
+      "expected_output": "Recommends Expo, gives the exact start commands, and checks that the SDK is current.",
+      "files": [],
+      "expectations": [
+        "Recommends Expo with a reason tied to the team's React skills",
+        "Gives npx create-expo-app@latest and npx expo start",
+        "Verifies the current Expo SDK live or flags that a newer SDK may have shipped (current-state.md says VERIFY)",
+        "Does not add newArchEnabled",
+        "Gives one recommendation rather than a menu of stacks"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Upgrade this Expo app to the latest SDK.",
+      "expected_output": "Runs preflight, fixes the config problems, and upgrades one SDK at a time with expo install --fix and expo-doctor.",
+      "files": [
+        "evals/files/expo-old"
+      ],
+      "expectations": [
+        "Runs scripts/preflight.sh and reports its FAIL lines",
+        "Removes newArchEnabled from app.json",
+        "Flags EXPO_PUBLIC_STRIPE_SECRET_KEY as a secret that ships in the app bundle",
+        "Flags targetSdkVersion 35 as below the Play requirement of 36",
+        "Uses npx expo install --fix and npx expo-doctor",
+        "Upgrades one SDK at a time and reads the changelog"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "After upgrading Expo, npm install fails with ERESOLVE because a library's peer dependency excludes the new expo version. What do I do?",
+      "expected_output": "Checks for a peer-dependency cap before using legacy-peer-deps and explains the risk.",
+      "files": [],
+      "expectations": [
+        "Identifies a peer-dependency cap in the library as the likely cause",
+        "Tells the user to check the library's issues/releases for a compatible version first",
+        "Treats --legacy-peer-deps as a last resort with the risk stated",
+        "Suggests npx expo-doctor afterwards"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "I'm about to submit my Android update to Google Play. It targets API 34. Anything I need to change?",
+      "expected_output": "Says API 34 is below the current requirement and gives the verified number and date.",
+      "files": [],
+      "expectations": [
+        "States that new apps and updates must target API 36 since 2026-08-31",
+        "Verifies this from a live source or current-state.md and names it",
+        "Tells the user how to set targetSdkVersion (expo-build-properties or Gradle)",
+        "Mentions testing on a newer OS (edge-to-edge, predictive back)"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Flutter or Expo? We want a heavily custom animated canvas UI and also need a macOS desktop app from the same code.",
+      "expected_output": "Recommends Flutter with reasons, in one clear answer.",
+      "files": [],
+      "expectations": [
+        "Recommends Flutter",
+        "Cites custom rendering and desktop support as the reasons",
+        "Gives a single recommendation",
+        "Does not recommend rewriting an existing app without a concrete blocker"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Where should I put my Stripe secret key in my Expo app? I was going to use EXPO_PUBLIC_STRIPE_SECRET_KEY.",
+      "expected_output": "Refuses that approach and moves the secret to a server.",
+      "files": [],
+      "expectations": [
+        "Says EXPO_PUBLIC_ variables are bundled into the app and readable by users",
+        "Recommends keeping the secret key on a server and calling it from the app",
+        "Mentions that only the publishable key belongs in the client",
+        "Does not provide a way to hide the secret inside the bundle"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "I added a native library and shipped it with EAS Update. Now the app crashes on launch.",
+      "expected_output": "Explains OTA updates cannot ship native changes and gives the recovery steps.",
+      "files": [],
+      "expectations": [
+        "States that EAS Update ships JS and assets only and a native dependency change needs a new store build",
+        "Mentions runtimeVersion and a policy that prevents mismatched updates",
+        "Gives a rollback or republish path to stop the crash for current users",
+        "Gives the build command (eas build)"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Our CI runs on an Intel Mac mini. Can we just move to Xcode 27 for our iOS builds?",
+      "expected_output": "Says no for that hardware and gives the real constraints and timeline.",
+      "files": [],
+      "expectations": [
+        "States Xcode 27 runs only on Apple silicon and needs macOS Tahoe 26.6 or later",
+        "States the iOS 27 SDK upload requirement starts in April 2027 and that Xcode 26 builds are accepted until then",
+        "Suggests EAS Build or Apple-silicon runners as the path",
+        "Marks the exact April 2027 date as unconfirmed"
+      ]
+    }
+  ]
+}

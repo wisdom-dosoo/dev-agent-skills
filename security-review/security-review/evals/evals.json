@@ -1,0 +1,102 @@
+{
+  "skill_name": "security-review",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Audit this app before we ship it. It handles logins and Stripe payments.",
+      "expected_output": "Runs secrets-scan, reports the client-bundled secret, hard-coded live key, and private key as Critical/High findings with fixes.",
+      "files": ["evals/files/leaky-app"],
+      "expectations": [
+        "Runs scripts/secrets-scan.sh and reports its FAIL lines",
+        "Flags NEXT_PUBLIC_STRIPE_SECRET_KEY as a secret that ships to the browser",
+        "Flags the hard-coded sk_live_ key and says to revoke/rotate it",
+        "Flags the private key file and says to move it to a secret manager",
+        "Orders findings by severity with a fix and verification step each"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Review this Express login route for problems.",
+      "expected_output": "Identifies NoSQL injection, plaintext password handling, and missing rate limiting.",
+      "files": ["evals/files/leaky-app"],
+      "expectations": [
+        "Identifies NoSQL operator injection from passing req.body straight into a filter",
+        "Notes plaintext password comparison with no bcrypt/argon2",
+        "Notes missing rate limiting on the login route",
+        "Provides corrected code"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Is it OK to put our API key in a VITE_ variable for our Vite app?",
+      "expected_output": "Refuses: VITE_ variables ship to the browser; secret stays server-side.",
+      "files": [],
+      "expectations": [
+        "Says VITE_-prefixed variables are bundled into client JS and readable by users",
+        "Recommends keeping the secret on a server and calling it from the client",
+        "Mentions only publishable keys belong in the client",
+        "Does not provide a way to hide the secret inside the bundle"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Threat-model our password-reset flow: emailed link with a token.",
+      "expected_output": "A per-flow model naming asset, boundary, checks, and abuse cases.",
+      "files": [],
+      "expectations": [
+        "Names the asset (account takeover) and the trust boundary (email + reset link)",
+        "Requires single-use tokens with expiry",
+        "Names abuse cases (token replay, enumeration via timing/response differences)",
+        "States which controls are missing vs present rather than assuming them"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "npm audit shows a critical in production. How do we handle it?",
+      "expected_output": "Treats it as a finding with upgrade command and verification, plus a policy.",
+      "files": [],
+      "expectations": [
+        "Says to patch immediately rather than backlog it",
+        "Gives the exact upgrade + rebuild + test commands",
+        "Recommends lockfile + CI audit gating to prevent recurrence",
+        "Mentions checking whether the vulnerable code path is actually reachable"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Can two users see each other's orders? Our route is GET /orders/:id.",
+      "expected_output": "Tests object-level authorization with two accounts and shows the fix.",
+      "files": [],
+      "expectations": [
+        "Identifies IDOR risk and tests with two accounts, not just route auth",
+        "Requires a per-record ownership check in the handler",
+        "Notes hidden UI elements are not access control",
+        "Provides corrected code"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "We log full request headers for debugging, including Authorization. Fine?",
+      "expected_output": "Flags credential logging with the redaction fix and rotation advice.",
+      "files": [],
+      "expectations": [
+        "Says Authorization headers must never be logged",
+        "Recommends structured logging with an allowlist of safe fields",
+        "Notes existing logs containing tokens should be purged and tokens rotated",
+        "Mentions the morgan :remote-user log-injection history as context"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Give us the top 3 security actions before launch for a marketplace with uploads and payments.",
+      "expected_output": "Prioritized top-3 with reasons, covering secrets, auth/payments, and uploads.",
+      "files": [],
+      "expectations": [
+        "Gives exactly three prioritized actions, not an exhaustive list",
+        "Covers secret handling and payment-key scope",
+        "Covers upload validation (size limits, magic-byte type check, object storage)",
+        "Each action states how to verify it is done"
+      ]
+    }
+  ]
+}

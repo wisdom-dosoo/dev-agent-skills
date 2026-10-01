@@ -1,0 +1,102 @@
+{
+  "skill_name": "product-planning",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I have an idea: a recipe-sharing site with social features, meal planning, grocery integration, and premium subscriptions. Help me scope the MVP.",
+      "expected_output": "One thin slice with an explicit out-of-scope list and a success metric.",
+      "files": [],
+      "expectations": [
+        "Proposes a thin end-to-end slice (post + discover a recipe) rather than all features",
+        "Has an explicit Out of scope section deferring meal planning, grocery, and payments",
+        "Names one success metric with a target",
+        "Gives one sequenced recommendation rather than a menu",
+        "Does not include backend-only milestones with no user-visible effect"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Write user stories for clinic appointment booking: patients book, receptionists manage, reminders go out.",
+      "expected_output": "Demoable stories with acceptance criteria including sad paths.",
+      "files": [],
+      "expectations": [
+        "Each story is independently demoable by a user",
+        "Acceptance criteria are observable by a non-engineer",
+        "Includes sad-path criteria (double booking, failed reminder)",
+        "Each story has an out-of-scope line and a size"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "How long will it take to build a marketplace with chat, payments, reviews, and an admin panel? We need a date for investors.",
+      "expected_output": "Ranges with confidence, unknowns as spikes, and date-driven scope trade.",
+      "files": [],
+      "expectations": [
+        "Gives ranges, not a single date, with a confidence note",
+        "Turns unknowns into time-boxed spikes rather than padding",
+        "Offers date-driven scoping (fix the date, flex the scope)",
+        "Never commits to a calendar date for unresolved work"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Prioritize these for v1: SSO, audit logs, dark mode, CSV export, mobile app, API webhooks.",
+      "expected_output": "MoSCoW with most items deferred and revisit triggers.",
+      "files": [],
+      "expectations": [
+        "Puts most items in Won't with a revisit trigger each",
+        "Forces at most one or two Must items with the reason stated",
+        "Judges by user value, not by effort size",
+        "Gives one ordered recommendation"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Write a PRD for an internal HR tool: employee records, roles, reports.",
+      "expected_output": "A complete PRD following the template with scope in/out and risks.",
+      "files": [],
+      "expectations": [
+        "Follows the PRD template (problem, users, metric, scope, risks, questions)",
+        "Has exactly one success metric plus a counter-metric",
+        "Out-of-scope items each carry a revisit trigger",
+        "Risks name a spike or decision that retires each"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Should our MVP include multi-tenancy? We might sell to enterprises later.",
+      "expected_output": "Defers multi-tenancy with the trigger for revisiting.",
+      "files": [],
+      "expectations": [
+        "Says no for the MVP with the cost reason (complexity tax on every story)",
+        "Names the revisit trigger (first enterprise prospect)",
+        "Proposes the cheapest reversible step instead (e.g. org_id column, single-tenant deploys)",
+        "Does not design the full multi-tenant architecture now"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Plan the releases after our booking MVP: payments, reminders, analytics, mobile app.",
+      "expected_output": "Risk-first sequencing with user-visible outcomes per release.",
+      "files": [],
+      "expectations": [
+        "Orders by risk times value, not by ease",
+        "Each release has a user-visible outcome",
+        "No infrastructure-only Sprint 0 longer than a week",
+        "States what assumption each release retires"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Everything on our backlog is marked Must. Help.",
+      "expected_output": "Forces the ordering with the 60% rule and pushes back.",
+      "files": [],
+      "expectations": [
+        "Pushes back: three top priorities means no priorities",
+        "Applies the Must budget (roughly 60% of effort) to force cuts",
+        "Moves items to Should/Could/Won't with reasons",
+        "Ends with one ordered list, not a menu"
+      ]
+    }
+  ]
+}

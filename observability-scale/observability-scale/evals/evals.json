@@ -1,0 +1,101 @@
+{
+  "skill_name": "observability-scale",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Our booking list page takes 8 seconds to load with 500 bookings. It's Django with Postgres. What's wrong?",
+      "expected_output": "Diagnoses N+1/indexing top-down with EXPLAIN ANALYZE before any scaling advice.",
+      "files": [],
+      "expectations": [
+        "Suspects N+1 (missing select_related/prefetch_related) as the first check",
+        "Requires EXPLAIN ANALYZE on the actual query before recommending indexes",
+        "Does not recommend Redis, replicas, or sharding as the first step",
+        "States the proof metric (page p95, query ms) for the fix"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "We're launching on Product Hunt tomorrow and expect 50x traffic. What do we do?",
+      "expected_output": "Readiness checklist: cache/CDN, connection pooling, autoscale, rollback, on-call — no redesign.",
+      "files": [],
+      "expectations": [
+        "Prioritizes reversible readiness (cache hot reads, pool connections, scale replicas) over redesign",
+        "Requires a tested rollback path and a named owner",
+        "Mentions shedding load via feature flags as the emergency lever",
+        "Does not propose sharding or microservices for tomorrow"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Should we add Redis? Our API feels slow.",
+      "expected_output": "Refuses to prescribe caching before measurement and names the prerequisite data.",
+      "files": [],
+      "expectations": [
+        "Asks for the measured bottleneck (which endpoint, p95, query breakdown) first",
+        "States caching hides unmeasured bottlenecks and adds invalidation cost",
+        "Requires TTL plus invalidation story for any cached entry",
+        "Proposes the measurement steps before the cache"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Write SLOs for our checkout flow.",
+      "expected_output": "Availability + latency SLOs with burn-rate alerts and a freeze policy.",
+      "files": [],
+      "expectations": [
+        "Follows the SLO template (availability + p95 latency, 30-day window)",
+        "Defines the error budget with a freeze/exhaustion policy",
+        "Uses burn-rate alerting, not raw CPU/threshold pages",
+        "Lists exclusions explicitly"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Postgres primary is at 95% CPU, mostly SELECTs, 10:1 read ratio. Next step?",
+      "expected_output": "Read replica with lag alerting, after confirming indexes are sane.",
+      "files": [],
+      "expectations": [
+        "Recommends a read replica with the read-ratio reason",
+        "Requires replica-lag monitoring with an alert threshold",
+        "Confirms hot queries are indexed first (replicas don't fix bad queries)",
+        "States the proof metric (primary CPU, lag seconds)"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Our background emails sometimes send twice and sometimes vanish. Design the job system.",
+      "expected_output": "Idempotent jobs with retries, backoff, and DLQ monitoring.",
+      "files": [],
+      "expectations": [
+        "Requires idempotent job handlers for at-least-once delivery",
+        "Specifies retries with backoff plus a dead-letter queue",
+        "Requires DLQ monitoring/alerting (no silent black hole)",
+        "Does not propose exactly-once semantics"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Production is down after a deploy 20 minutes ago. Walk me through it.",
+      "expected_output": "Mitigate-first response: rollback, comms cadence, then diagnose.",
+      "files": [],
+      "expectations": [
+        "Says to roll back the last deploy before deep diagnosis",
+        "Names an incident commander and comms channel",
+        "Sets user/internal update cadences",
+        "Treats the last change as guilty until proven innocent"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Write a postmortem for yesterday's 2-hour outage caused by an engineer dropping the production database.",
+      "expected_output": "Blameless postmortem rejecting human-error root cause with guardrail actions.",
+      "files": [],
+      "expectations": [
+        "Follows the postmortem template with log-based timeline",
+        "Rejects human error as root cause and names the missing guardrail",
+        "Produces action items with owners and dates",
+        "Sets a follow-up review date"
+      ]
+    }
+  ]
+}
