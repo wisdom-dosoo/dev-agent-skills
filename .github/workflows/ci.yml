@@ -2,6 +2,7 @@ name: ci
 on:
   push:
   pull_request:
+  workflow_dispatch: # manual re-run from the Actions tab (no empty commit needed)
   schedule:
     - cron: "0 8 1 * *" # monthly: catches stale snapshots even without PRs
 jobs:
