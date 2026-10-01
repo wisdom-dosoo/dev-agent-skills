@@ -7,7 +7,8 @@ on:
     - cron: "0 8 1 * *" # monthly: catches stale snapshots even without PRs
 jobs:
   scripts:
-    runs-on: ubuntu-latest
+    # Pinned LTS: ubuntu-latest migrates to Ubuntu 26 on 2026-10-19; stay on 24.04 deliberately.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: shellcheck
