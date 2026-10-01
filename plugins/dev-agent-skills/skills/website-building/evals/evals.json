@@ -1,0 +1,103 @@
+{
+  "skill_name": "website-building",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Make a website for my bakery: menu, location and hours, contact, and a way to take cake orders.",
+      "expected_output": "A conversion-led outline plus a static-first build with forms handled by a service.",
+      "files": [],
+      "expectations": [
+        "Starts from the conversion action (cake orders) before writing code",
+        "Produces a section outline with one message per section, not code first",
+        "Recommends a static-first stack, not a Vite SPA or a database-backed app",
+        "Handles the order form via an endpoint service, never mailto-only",
+        "Gives one stack recommendation rather than a menu"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Check this landing page before launch.",
+      "expected_output": "Runs site-check, FAILs broken links, WARNs missing SEO tags with exact fixes.",
+      "files": ["evals/files/landing-bad"],
+      "expectations": [
+        "Runs scripts/site-check.sh and reports its FAIL line",
+        "Flags the broken pricing and contact links with the fix",
+        "Flags missing meta description, OG tags, and canonical with exact markup",
+        "Flags the missing sitemap.xml and robots.txt",
+        "Flags the form without an endpoint"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Astro or Next.js for our marketing site? We already have a Next.js product app.",
+      "expected_output": "Recommends Next.js static export with the shared-code reason, done in one line for Astro.",
+      "files": [],
+      "expectations": [
+        "Recommends static export inside the existing Next.js app with the reason",
+        "States Astro as the rejected alternative in one line (no existing Astro codebase)",
+        "Warns against mixing server features into the static pages",
+        "Gives one recommendation rather than a menu"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "We need a blog our non-technical team can publish to weekly.",
+      "expected_output": "A CMS decision driven by editor pain with Markdown-first as the rejected default.",
+      "files": [],
+      "expectations": [
+        "Recommends a headless CMS or hosted MDX platform tied to the weekly non-technical publishing need",
+        "States Markdown-in-git as the rejected default with the editor-pain reason",
+        "Refuses to build a custom CMS with the never-ending-project reason",
+        "Mentions sitemap regeneration on content change"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Our shared links show a gray box with no image. Fix our link previews.",
+      "expected_output": "OG tag diagnosis with exact markup and validator verification.",
+      "files": [],
+      "expectations": [
+        "Identifies missing og:title/og:image as the cause",
+        "Requires absolute URLs and the 1200x630 image size",
+        "Provides the exact meta markup",
+        "Verifies with a card validator, not by re-sharing blindly"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Build a dashboard where our clients log in to see their orders.",
+      "expected_output": "Redirects to web-app-development with the one-line boundary reason.",
+      "files": [],
+      "expectations": [
+        "Refuses to build it as a marketing site",
+        "Names logins plus per-user data as the web-app trigger in one line",
+        "Hands off to web-app-development explicitly",
+        "Does not scaffold auth, a database, or an admin panel"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Plan the information architecture for a freelancer portfolio: work, services, about, contact.",
+      "expected_output": "A sequenced outline led by proof-before-ask with copy status tracking.",
+      "files": [],
+      "expectations": [
+        "Follows the landing-outline template order (proof before the ask)",
+        "Puts selected work and testimonials ahead of the contact CTA",
+        "Marks unapproved copy as TODO with an owner rather than shipping lorem ipsum",
+        "Includes per-page title and description in the plan"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Our staging site is ranking on Google instead of production. What happened?",
+      "expected_output": "Diagnoses the robots/sitemap mix-up with the launch checklist fix.",
+      "files": [],
+      "expectations": [
+        "Identifies staging robots/sitemap or canonicals pointing at staging",
+        "Requires Disallow: / on staging and allow on production",
+        "Requires canonicals to be absolute production URLs",
+        "Gives the pre-launch verification steps, not just the fix"
+      ]
+    }
+  ]
+}

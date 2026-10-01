@@ -29,7 +29,10 @@ jobs:
             frontend-excellence/frontend-excellence/scripts/frontend-check.sh \
             frontend-excellence/frontend-excellence/evals/check-fixtures.sh \
             install.sh \
-            scripts/check-house-style.sh
+            scripts/check-house-style.sh \
+            scripts/sync-plugin.sh
+      - name: plugin package in sync
+        run: bash scripts/sync-plugin.sh --check
       - name: installer smoke test (all agents)
         run: |
           for a in claude codex copilot agents; do

@@ -11,6 +11,15 @@
 # --link symlinks instead of copying (drift-free; Codex follows symlinks).
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
+if [ ! -d "$HERE/product-planning" ]; then
+  # Piped via curl: $0 is not the repo checkout, so fetch it.
+  command -v curl >/dev/null 2>&1 || { echo "curl is required for remote install; clone https://github.com/wisdom-dosoo/dev-agent-skills instead."; exit 1; }
+  command -v tar >/dev/null 2>&1 || { echo "tar is required for remote install; clone the repo instead."; exit 1; }
+  FETCHD="$(mktemp -d)"
+  trap 'rm -rf "$FETCHD"' EXIT
+  curl -fsSL https://github.com/wisdom-dosoo/dev-agent-skills/archive/refs/heads/main.tar.gz | tar -xz -C "$FETCHD"
+  HERE="$FETCHD/dev-agent-skills-main"
+fi
 SKILLS="product-planning system-design web-app-development cross-platform-mobile website-building frontend-excellence security-review quality-assurance devops-delivery observability-scale"
 FIXTURED="web-app-development cross-platform-mobile website-building security-review devops-delivery quality-assurance frontend-excellence"
 
@@ -26,6 +35,8 @@ Agents (default: claude):
   all      -> claude + codex + copilot destinations
 --dest DIR overrides the destination (single-agent installs only).
 --link symlinks instead of copying (drift-free; Codex follows symlinks).
+One-line remote install:
+  curl -fsSL https://raw.githubusercontent.com/wisdom-dosoo/dev-agent-skills/main/install.sh | bash -s -- --agent codex
 EOF
   exit "${1:-0}"
 }

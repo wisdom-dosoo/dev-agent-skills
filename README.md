@@ -1,6 +1,16 @@
 # dev-agent-skills
 
-Ten Claude agent skills covering the full software-engineering lifecycle — from "I have an idea" to production operations. Install them into Claude Code or claude.ai and they trigger automatically on the right prompts: planning scopes the work, design records the decisions, stack skills build it, gates audit it, DevOps ships it, observability keeps it alive.
+[![CI](https://github.com/wisdom-dosoo/dev-agent-skills/actions/workflows/ci.yml/badge.svg)](https://github.com/wisdom-dosoo/dev-agent-skills/actions/workflows/ci.yml)
+[![GitHub release](https://img.shields.io/github/v/release/wisdom-dosoo/dev-agent-skills)](https://github.com/wisdom-dosoo/dev-agent-skills/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+Ten agent skills covering the full software-engineering lifecycle — from "I have an idea" to production operations. Works with Claude Code, OpenAI Codex, VS Code Copilot, and any agent that reads the open [Agent Skills](https://agentskills.io) format.
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/wisdom-dosoo/dev-agent-skills/main/install.sh | bash -s -- --agent codex
+```
+
+Planning scopes the work, design records the decisions, stack skills build it, gates audit it, DevOps ships it, observability keeps it alive.
 
 | Layer | Skill | Field in one line |
 |---|---|---|
@@ -30,31 +40,50 @@ Each skill is a folder: `SKILL.md` (trigger description + workflow + hard rules)
 
 ## Install
 
-### All nine skills (recommended)
+### One line (any agent)
 
 ```bash
-# macOS / Linux / WSL / Git Bash — installs to ~/.claude/skills/
-./install.sh
-
-# Windows PowerShell — same destination, no admin needed
-.\install.ps1
-
-# Custom destination (CI, second account, testing)
-./install.sh --dest /tmp/skills-test
+curl -fsSL https://raw.githubusercontent.com/wisdom-dosoo/dev-agent-skills/main/install.sh | bash -s -- --agent codex
+# --agent: claude (default) | codex | copilot | agents | all
 ```
 
-### One skill only
+### From a clone
 
 ```bash
-cp -r product-planning/product-planning ~/.claude/skills/product-planning
-# …same pattern: <skill>/<skill> → ~/.claude/skills/<skill>
+./install.sh                    # Claude Code → ~/.claude/skills (default)
+./install.sh --agent codex      # Codex CLI/IDE/app → ~/.agents/skills
+./install.sh --agent copilot    # VS Code / Copilot CLI → ~/.copilot/skills
+./install.sh --agent agents     # open interop path → ~/.agents/skills
+./install.sh --agent all        # all three destinations at once
+./install.sh --agent codex --dest /tmp/try   # override destination (single agent)
+./install.sh --agent agents --link           # symlink instead of copy (drift-free)
+
+# Windows PowerShell (no admin): .\install.ps1 [-Agent codex|copilot|agents|all] [-Dest ...] [-Link]
 ```
+
+### One skill, or project scope (travels with the repo)
+
+```bash
+cp -r system-design/system-design ~/.agents/skills/system-design
+cp -r system-design/system-design /path/to/repo/.agents/skills/system-design
+```
+
+### Codex plugin (one-click for Codex users)
+
+This repo ships a ready-made plugin bundle (`plugins/dev-agent-skills/` + repo marketplace at `.agents/plugins/marketplace.json`):
+
+```bash
+codex plugin marketplace add wisdom-dosoo/dev-agent-skills
+# then: /plugins → Dev Agent Skills → install → start a new session
+```
+
+The plugin's `skills/` are exact copies of the canonical skill folders, kept in sync by `scripts/sync-plugin.sh` (CI fails on drift — edit skills, never the copies).
 
 ### Uninstall / update
 
 ```bash
 rm -rf ~/.claude/skills/<skill-name>   # uninstall one
-./install.sh                            # re-run to update (overwrites)
+./install.sh --agent <yours>            # re-run to update (overwrites cleanly)
 ```
 
 ### Verify the install

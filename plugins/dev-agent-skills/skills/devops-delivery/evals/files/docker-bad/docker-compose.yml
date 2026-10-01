@@ -1,0 +1,8 @@
+# Fixture: intentionally bad. Do not copy into real projects.
+services:
+  web:
+    build: .
+  db:
+    image: redis:latest
+    environment:
+      POSTGRES_PASSWORD: hunter2
